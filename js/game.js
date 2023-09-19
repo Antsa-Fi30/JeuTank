@@ -1,19 +1,11 @@
-const widthScreen = window.innerWidth;
-const heightScreen = window.innerHeight;
+const WidthScreen = window.innerWidth;
+const HeightScreen = window.innerHeight;
 
 const config = {
-  width: widthScreen - 20,
-  height: heightScreen - 20,
   type: Phaser.AUTO,
-  preload: preload,
-  create: create,
-  update: update,
+  width: WidthScreen - 20,
+  height: HeightScreen - 20,
+  scene: [Scene1, Scene2],
 };
 
 const game = new Phaser.Game(config);
-
-function preload() {}
-
-function create() {}
-
-function update() {}
