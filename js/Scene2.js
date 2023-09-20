@@ -29,35 +29,23 @@ class Scene2 extends Phaser.Scene {
       "tank1",
       "tank1_head"
     );
-  }
-
-  addEvent() {
-    this.input.on("pointerdown", (pointer) => {
-      if (pointer.rightButtonDown) {
-        this.tank1.Fire();
-      }
-    });
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
   update() {
-    //Deplacement du pointeur souris et la direction de la tête
-
+    const speed = 40;
+    this.tank1.moveTank(0, 0);
     //Touche au clavier
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-    const speed = 12;
-
     if (this.cursorKeys.up.isDown) {
-      console.log("forwards");
+      this.tank1.moveTank(0, -speed);
     } else if (this.cursorKeys.down.isDown) {
-      console.log("backwards");
+      this.tank1.moveTank(0, speed);
     } else if (this.cursorKeys.left.isDown) {
-      console.log("left");
+      this.tank1.moveTank(-speed, 0);
     } else if (this.cursorKeys.right.isDown) {
-      console.log("right");
+      this.tank1.moveTank(speed, 0);
     }
 
     this.tank1.TurnTurret();
-    this.addEvent();
   }
 }

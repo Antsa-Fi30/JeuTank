@@ -1,3 +1,5 @@
+class Bullet extends Phaser.Physics.Arcade.Sprite {}
+
 class Tank extends Phaser.GameObjects.Container {
   constructor(scene, x, y, texture, turret) {
     super(scene, x, y);
@@ -14,8 +16,15 @@ class Tank extends Phaser.GameObjects.Container {
     this.turret = head; //Permet d'ajouter le texture du tour au tank
   }
 
-  Fire() {
-    console.log("bouufff!!");
+  Fire() {}
+
+  moveTank(velocityX, velocityY) {
+    this.body.setVelocity(velocityX, velocityY);
+    if (velocityX < 0) {
+      this.body.angle += 90;
+    } else if (velocityX > 0) {
+      this.body.angle -= 90;
+    }
   }
 
   TurnTurret() {
