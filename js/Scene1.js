@@ -5,11 +5,18 @@ class Scene1 extends Phaser.Scene {
 
   preload() {
     this.load.image("background", "assets/img/Bg.jpg");
-    this.load.image("tank1", "../assets/img/png/tank_red.png");
-    this.load.image("tank2", "../assets/img/png/tank_blue.png");
-    this.load.image("tank3", "../assets/img/png/tank_green.png");
-    this.load.image("tank4", "../assets/img/png/tank_dark.png");
-    this.load.image("tank5", "../assets/img/png/tank_sand.png");
+    this.load.image("tank1", "assets/img/png/tankBody_red.png");
+    this.load.image("tank1_head", "assets/img/png/tankRed_barrel1_outline.png");
+    this.load.image("tank2", "assets/img/png/tankBody_blue.png");
+    this.load.image("tank2_head", "assets/img/png/tankBlue_barrel1.png");
+    this.load.image("Viseur", "assets/img/viseur/particle_2.png");
+    this.load.image("shootFlame", "assets/img/png/shotLarge.png");
+    this.load.image("bullet", "assets/img/png/bulletRed1_outline.png");
+
+    this.load.spritesheet("explosion", "assets/img/png/explosion.png", {
+      frameWidth: 40,
+      frameHeight: 40,
+    });
   }
 
   create() {

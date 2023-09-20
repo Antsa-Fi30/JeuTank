@@ -4,56 +4,60 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    this.background = this.add.image(0, 0, "background");
+    this.input.enabled = true;
+
+    //Curseur
+    let cursor = this.input.setDefaultCursor(
+      "url(assets/img/viseur/particle_2.png), pointer"
+    );
+
+    //Permet de scroller le fond
+    this.background = this.add.tileSprite(
+      0,
+      0,
+      config.width,
+      config.height,
+      "background"
+    );
     this.background.setOrigin(0, 0);
 
-    this.tank1 = this.add.image(
+    // Créez un tank en utilisant la classe Tank
+    this.tank1 = new Tank(
+      this,
       config.width / 2 - 70,
       config.height / 2,
-      "tank1"
-    );
-
-    this.tank1.setScale(1.5);
-
-    this.tank2 = this.add.image(config.width / 2, config.height / 2, "tank2");
-    this.tank3 = this.add.image(
-      config.width / 2 + 50,
-      config.height / 2,
-      "tank3"
-    );
-
-    this.tank3.setScale(0.5);
-
-    this.tank5 = this.add.image(
-      config.width / 2 - 50,
-      config.height / 2,
-      "tank5"
-    );
-    this.tank4 = this.add.image(
-      config.width / 2 + 50,
-      config.height / 2,
-      "tank4"
+      "tank1",
+      "tank1_head"
     );
   }
 
-  moveTank(tank, speed) {
-    tank.y += speed;
-    if (tank.y > config.height) {
-      this.resetTank(tank);
-    }
-  }
-
-  resetTank(tank) {
-    tank.y = 0;
-    let randomX = Phaser.Math.Between(0, config.width);
-    tank.x = randomX;
+  addEvent() {
+    this.input.on("pointerdown", (pointer) => {
+      if (pointer.rightButtonDown) {
+        this.tank1.Fire();
+      }
+    });
   }
 
   update() {
-    this.moveTank(this.tank1, 1);
-    this.moveTank(this.tank2, 4);
-    this.moveTank(this.tank3, 7);
-    this.moveTank(this.tank4, 7);
-    this.moveTank(this.tank3, 7);
+    //Deplacement du pointeur souris et la direction de la tête
+
+    //Touche au clavier
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+    const speed = 12;
+
+    if (this.cursorKeys.up.isDown) {
+      console.log("forwards");
+    } else if (this.cursorKeys.down.isDown) {
+      console.log("backwards");
+    } else if (this.cursorKeys.left.isDown) {
+      console.log("left");
+    } else if (this.cursorKeys.right.isDown) {
+      console.log("right");
+    }
+
+    this.tank1.TurnTurret();
+    this.addEvent();
   }
 }
