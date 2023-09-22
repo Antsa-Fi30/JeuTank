@@ -11,7 +11,7 @@ class Tank extends Phaser.GameObjects.Container {
     const body = scene.physics.add.sprite(0, 0, texture);
     const head = scene.physics.add.sprite(0, 0, turret);
     head.setOrigin(0.5, 0.1);
-    head.setScale(1);
+    head.setScale(0.9);
     this.add([body, head]);
 
     scene.add.existing(this);
