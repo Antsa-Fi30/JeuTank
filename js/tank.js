@@ -33,10 +33,6 @@ class Tank extends Phaser.GameObjects.Container {
     }
   }
 
-  TakeFlag(tank) {
-    console.log("le tank " + tank + "a pris le drapeau");
-  }
-
   TurnTurret() {
     // Calcul de l'angle entre le curseur et la tourelle
     const pointer = this.scene.input.activePointer;
@@ -60,5 +56,9 @@ class Tank extends Phaser.GameObjects.Container {
           Math.PI / 2
       );
     }
+  }
+
+  shootBullet(scene) {
+    let laser = new Bullets(scene, this);
   }
 }

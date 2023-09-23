@@ -7,6 +7,10 @@ class Scene2 extends Phaser.Scene {
     this.input.enabled = true;
 
     //Curseur
+    // Centrez le curseur dans la scène
+
+    //Définissez le curseur personnalisé
+
     this.input.setDefaultCursor(
       "url(assets/img/viseur/particle_2.png), pointer"
     );
@@ -38,11 +42,11 @@ class Scene2 extends Phaser.Scene {
       "tank2_head"
     );
 
-    // for (let i = 0; i < 10; i++) {
-    //   let x = Math.floor(Math.random() * config.width);
-    //   let y = Math.floor(Math.random() * config.height);
-    //   this.tankE = new Tank(this, x, y, "tankEnemy");
-    // }
+    for (let i = 0; i < 5; i++) {
+      let x = Math.floor(Math.random() * config.width);
+      let y = Math.floor(Math.random() * config.height);
+      this.tankE = new Tank(this, x, y, "tankEnemy");
+    }
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.inputKeys = this.input.keyboard.addKeys({
@@ -77,7 +81,7 @@ class Scene2 extends Phaser.Scene {
     for (i = 0; i < 20; i++) {
       let x = Math.floor(Math.random() * 1200) + 20;
       let y = Math.floor(Math.random() * 500) + 10;
-      this.add.image(x, y, "caisse");
+      this.physics.add.image(x, y, "caisse");
     }
     //Rocher grand
     for (i = 0; i < 5; i++) {
@@ -100,7 +104,7 @@ class Scene2 extends Phaser.Scene {
       this.add.image(x, y, "rock3");
     }
 
-    this.LaserGroup;
+    this.bulletGroup = this.physics.add.group();
 
     let greenFlag = this.add.image(1300, 300, "gflag");
     greenFlag.setScale(0.07);
@@ -109,7 +113,16 @@ class Scene2 extends Phaser.Scene {
   }
 
   addEvents() {
-    this.input.on("pointerdown", () => {});
+    this.input.on("pointerdown", () => {
+      // console.log(event);
+      // const aimX = event.clientX;
+      // const aimY = event.clientY;
+      // const Laser = this.physics.add.sprite(aimX, aimY, "laser");
+      // Laser.rotate = 145;
+      // this.bulletGroup.add(Laser);
+      // console.log(this.bulletGroup);
+      this.tank1.shootBullet(this);
+    });
   }
 
   update() {
@@ -143,12 +156,13 @@ class Scene2 extends Phaser.Scene {
     ) {
       this.tank1.moveTank(speed, 0);
     }
+
     this.tank1.TurnTurret();
   }
 }
 
-class Bullet extends Phaser.GameObjects.Image {
-  constructor(scene, x, y) {
+class Bullets extends Phaser.GameObjects.Sprite {
+  constructor(scene) {
     super(scene, x, y, "laser");
   }
 }
