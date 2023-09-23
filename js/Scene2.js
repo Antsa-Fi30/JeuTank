@@ -109,7 +109,25 @@ class Scene2 extends Phaser.Scene {
     let greenFlag = this.add.image(1300, 300, "gflag");
     greenFlag.setScale(0.07);
 
+    let plate = this.physics.add.staticGroup(); //creation de staticgroup
+    this.setCollider(this, plate, caisse, tankr);
+
+    //let tankb = this.physics.add.staticGroup().tank2;
+    /* let tanke = this.physics.tankE;
+     let caisse1 = this.physics.caisse;
+     let flag1 = this.physics.greenFlag;
+     let rock0 = this.physics.rock;
+     let rock22 = this.physics.rock2;
+     let rock33 = this.physics.rock3;  console.log("oui"); /
+
+     this.physics.add.collider(plate,tankr); */
+
     this.addEvents();
+  }
+
+  setCollider(scene, plate, obj, objCollide) {
+    plate.add(obj);
+    scene.physics.add.collider(plate, objCollide); //collision entre tankred et tankenemy
   }
 
   addEvents() {
