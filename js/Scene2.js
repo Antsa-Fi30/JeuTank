@@ -1,15 +1,3 @@
-class Bullet extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene) {
-    super(scene, 0, 0, "laser");
-
-    this.directionX = 0;
-    this.directionY = 0;
-    this.duree = 0;
-
-    this.speed = Phaser.Math.GetSpeed(600, 1);
-  }
-}
-
 class Scene2 extends Phaser.Scene {
   constructor() {
     super("playgame");
@@ -120,17 +108,19 @@ class Scene2 extends Phaser.Scene {
     let greenFlag = this.add.image(1300, 300, "gflag");
     greenFlag.setScale(0.07);
 
+    this.bullets = this.add.group({
+      classType: Bullet,
+      maxSize: 10,
+      runChildUpdate: true,
+    });
+
     this.addEvents();
   }
 
   addEvents() {
     this.input.on("pointerdown", (pointer) => {
-      console.log("Tank should shoot ");
-      this.tank1.Shoot(
-        this,
-        this.tank1.turret.body.x,
-        this.tank1.turret.body.y
-      );
+      console.log("Tank should shoot at " + pointer.y);
+      this.tank1.Shoot(this, "bullet");
     });
   }
 

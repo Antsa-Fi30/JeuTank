@@ -1,3 +1,21 @@
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y, texture) {
+    super(scene, x, y, texture);
+    this.x = x;
+    this.y = y;
+    this.texture = texture;
+    this.speed = 600;
+  }
+
+  fire(scene, x, y, texture) {
+    scene.physics.add.sprite(x, y, texture);
+  }
+
+  update() {
+    this.setVelocity(0, this.speed);
+  }
+}
+
 class Tank extends Phaser.GameObjects.Container {
   constructor(scene, x, y, texture, turret) {
     super(scene, x, y);
@@ -5,6 +23,7 @@ class Tank extends Phaser.GameObjects.Container {
     this.life = 10;
     this.bonus = [];
     this.flag = false;
+    this.bulletGroup;
 
     scene.physics.world.enable(this);
 
@@ -58,23 +77,18 @@ class Tank extends Phaser.GameObjects.Container {
     }
   }
 
-  Shoot(scene, x, y) {
-    const getRotation = this.turret.rotation;
-
-    const Direction = new Phaser.Math.Vector2(
-      Math.cos(getRotation),
-      Math.sin(getRotation)
+  Shoot(scene, texture) {
+    let bullet = new Bullet(
+      scene,
+      this.turret.body.x,
+      this.turret.body.y,
+      texture
     );
-
-    Direction.normalize();
-
-    this.bullet = scene.physics.add.sprite(x, y + 20, "bullet");
-    this.bullet.rotation = Phaser.Math.RadToDeg(getRotation);
-
-    const bulletSpeed = 900; // Adjust the speed as needed
-    this.bullet.setVelocity(
-      bulletSpeed * Direction.x + 20,
-      bulletSpeed * Direction.y
+    bullet.fire(
+      scene,
+      this.turret.body.x + 7,
+      this.turret.body.y - 30,
+      texture
     );
   }
 }
