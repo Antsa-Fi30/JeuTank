@@ -126,11 +126,10 @@ class Scene2 extends Phaser.Scene {
   addEvents() {
     this.input.on("pointerdown", (pointer) => {
       console.log("Tank should shoot ");
-      console.log(this.tank1.turret.body.x);
       this.tank1.Shoot(
         this,
-        this.tank1.turret.body.x + 7,
-        this.tank1.turret.body.y - 20
+        this.tank1.turret.body.x,
+        this.tank1.turret.body.y
       );
     });
   }
