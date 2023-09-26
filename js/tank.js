@@ -34,7 +34,6 @@ class Tank extends Phaser.GameObjects.Container {
     this.life = 10;
     this.bonus = [];
     this.flag = false;
-    this.bulletGroup;
 
     scene.physics.world.enable(this);
 
@@ -99,8 +98,8 @@ class Tank extends Phaser.GameObjects.Container {
 
     let bullet = new Bullet(
       scene,
-      this.turret.body.x,
-      this.turret.body.y,
+      this.turret.body.x + 6,
+      this.turret.body.y - 20,
       texture
     );
     bullet.fire(angle);
