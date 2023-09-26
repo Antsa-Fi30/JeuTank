@@ -99,9 +99,12 @@ class Tank extends Phaser.GameObjects.Container {
     let bullet = new Bullet(
       scene,
       this.turret.body.x + 6,
-      this.turret.body.y - 20,
+      this.turret.body.y,
       texture
     );
+
+    bullet.rotation = angle + Math.PI / 2;
+
     bullet.fire(angle);
   }
 }
