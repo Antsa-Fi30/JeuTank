@@ -58,7 +58,23 @@ class Tank extends Phaser.GameObjects.Container {
     }
   }
 
-  shootBullet(scene) {
-    let laser = new Bullets(scene, this);
+  Shoot(scene, x, y) {
+    const getRotation = this.turret.rotation;
+
+    const Direction = new Phaser.Math.Vector2(
+      Math.cos(getRotation),
+      Math.sin(getRotation)
+    );
+
+    Direction.normalize();
+
+    this.bullet = scene.physics.add.sprite(x, y + 20, "bullet");
+    this.bullet.rotation = Phaser.Math.RadToDeg(getRotation);
+
+    const bulletSpeed = 900; // Adjust the speed as needed
+    this.bullet.setVelocity(
+      bulletSpeed * Direction.x + 20,
+      bulletSpeed * Direction.y
+    );
   }
 }

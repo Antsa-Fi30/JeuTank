@@ -8,9 +8,7 @@ const config = {
   backgroundColor: 0x00000,
   physics: {
     default: "arcade",
-    arcade: {
-      debug: true,
-    },
+    arcade: {},
   },
   scene: [Scene1, Scene2],
 };
