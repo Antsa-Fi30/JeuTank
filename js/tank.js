@@ -1,18 +1,29 @@
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
-    this.x = x;
-    this.y = y;
-    this.texture = texture;
+    this.scene = scene;
+    scene.physics.world.enable(this);
+    scene.add.existing(this);
     this.speed = 600;
   }
 
-  fire(scene, x, y, texture) {
-    scene.physics.add.sprite(x, y, texture);
+  fire(angle) {
+    this.setVelocity(
+      Math.cos(angle) * this.speed,
+      Math.sin(angle) * this.speed
+    );
   }
 
   update() {
-    this.setVelocity(0, this.speed);
+    // Détruisez la balle lorsqu'elle sort de la zone de jeu
+    if (
+      this.x < 0 ||
+      this.x > this.scene.game.config.width ||
+      this.y < 0 ||
+      this.y > this.scene.game.config.height
+    ) {
+      this.destroy();
+    }
   }
 }
 
@@ -78,17 +89,20 @@ class Tank extends Phaser.GameObjects.Container {
   }
 
   Shoot(scene, texture) {
+    const pointer = scene.input.activePointer;
+    const angle = Phaser.Math.Angle.Between(
+      this.turret.body.x,
+      this.turret.body.y,
+      pointer.x,
+      pointer.y
+    );
+
     let bullet = new Bullet(
       scene,
       this.turret.body.x,
       this.turret.body.y,
       texture
     );
-    bullet.fire(
-      scene,
-      this.turret.body.x + 7,
-      this.turret.body.y - 30,
-      texture
-    );
+    bullet.fire(angle);
   }
 }
