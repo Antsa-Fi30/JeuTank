@@ -1,6 +1,7 @@
 class Scene2 extends Phaser.Scene {
   constructor() {
     super("playgame");
+    this.isDown = false;
   }
 
   create() {
@@ -10,10 +11,9 @@ class Scene2 extends Phaser.Scene {
     // Centrez le curseur dans la scène
 
     //Définissez le curseur personnalisé
-
-    this.input.setDefaultCursor(
-      "url(assets/img/viseur/particle_2.png), pointer"
-    );
+    // this.input.setDefaultCursor(
+    //   "url(assets/img/viseur/crosshair138.png), pointer"
+    // );
 
     //Permet de scroller le fond
     this.background = this.add.tileSprite(
@@ -48,6 +48,7 @@ class Scene2 extends Phaser.Scene {
       this.tankE = new Tank(this, x, y, "tankEnemy");
     }
 
+    //Touche de commande
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.inputKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -81,7 +82,7 @@ class Scene2 extends Phaser.Scene {
     for (i = 0; i < 20; i++) {
       let x = Math.floor(Math.random() * 1200) + 20;
       let y = Math.floor(Math.random() * 500) + 10;
-      this.physics.add.image(x, y, "caisse");
+      let caisse = this.physics.add.image(x, y, "caisse");
     }
     //Rocher grand
     for (i = 0; i < 5; i++) {
@@ -104,47 +105,27 @@ class Scene2 extends Phaser.Scene {
       this.add.image(x, y, "rock3");
     }
 
-    this.bulletGroup = this.physics.add.group();
-
     let greenFlag = this.add.image(1300, 300, "gflag");
     greenFlag.setScale(0.07);
 
-    let plate = this.physics.add.staticGroup(); //creation de staticgroup
-    this.setCollider(this, plate, caisse, tankr);
-
-    //let tankb = this.physics.add.staticGroup().tank2;
-    /* let tanke = this.physics.tankE;
-     let caisse1 = this.physics.caisse;
-     let flag1 = this.physics.greenFlag;
-     let rock0 = this.physics.rock;
-     let rock22 = this.physics.rock2;
-     let rock33 = this.physics.rock3;  console.log("oui"); /
-
-     this.physics.add.collider(plate,tankr); */
+    this.bullets = this.add.group({
+      classType: Bullet,
+      maxSize: 10,
+      runChildUpdate: true,
+    });
 
     this.addEvents();
   }
 
-  setCollider(scene, plate, obj, objCollide) {
-    plate.add(obj);
-    scene.physics.add.collider(plate, objCollide); //collision entre tankred et tankenemy
-  }
-
   addEvents() {
-    this.input.on("pointerdown", () => {
-      // console.log(event);
-      // const aimX = event.clientX;
-      // const aimY = event.clientY;
-      // const Laser = this.physics.add.sprite(aimX, aimY, "laser");
-      // Laser.rotate = 145;
-      // this.bulletGroup.add(Laser);
-      // console.log(this.bulletGroup);
-      this.tank1.shootBullet(this);
+    this.input.on("pointerdown", (pointer) => {
+      console.log("Tank should shoot at " + pointer.y);
+      this.tank1.Shoot(this, "bullet");
     });
   }
 
   update() {
-    const speed = 200;
+    const speed = 100;
 
     this.tank1.moveTank(0, 0);
 
@@ -176,11 +157,5 @@ class Scene2 extends Phaser.Scene {
     }
 
     this.tank1.TurnTurret();
-  }
-}
-
-class Bullets extends Phaser.GameObjects.Sprite {
-  constructor(scene) {
-    super(scene, x, y, "laser");
   }
 }

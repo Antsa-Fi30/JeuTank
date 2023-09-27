@@ -10,7 +10,6 @@ class Scene1 extends Phaser.Scene {
     this.load.image("tank2", "assets/img/png/tankBody_blue.png");
     this.load.image("tank2_head", "assets/img/png/tankBlue_barrel1.png");
     this.load.image("tankEnemy", "assets/img/png/tank_huge.png");
-    this.load.image("Viseur", "assets/img/viseur/particle_2.png");
     this.load.image("shootFlame", "assets/img/png/shotLarge.png");
     this.load.image("bullet", "assets/img/png/bulletRed1_outline.png");
     this.load.image("laser", "assets/img/laser/laser.png");
@@ -24,7 +23,11 @@ class Scene1 extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(20, 20, "Click to start...");
+    // this.add.text(20, 20, "Loading...");
+    // this.add.text(40, 40, "Click to start...");
+    // this.input.on("pointerdown", () => {
+    //   this.scene.start("playgame");
+    // });
     this.scene.start("playgame");
   }
 }
